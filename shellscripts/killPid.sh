@@ -1,3 +1,3 @@
 #!/bin/bash
-#This scripts lists all the python processes running on your machine
+#This scripts kills all the python processes running on your machine
 ps -ef | grep python | grep -v grep | kill $(cut -d" " -f4) 
