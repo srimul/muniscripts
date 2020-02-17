@@ -1,4 +1,5 @@
 #!/bin/sh
+#checks the input value is >0 or <0 or =0 or number or not
 if [ $1 -gt 0 ]; then
   echo "$1 is positive"
 elif [ $1 -lt 0 ]
