@@ -1,0 +1,53 @@
+---------------------------------------
+aws ec2 create-security-group --group-name MySg --description "Security group via CLI demo"
+aws ec2 authorize-security-group-ingress --group-name Mysg --protocol tcp --port 22 --cidr 0.0.0.0/0
+aws ec2 authorize-security-group-ingress --group-name Mysg --protocol tcp --port 80 --cidr 0.0.0.0/0
+aws ec2 authorize-security-group-ingress --group-name Mysg --protocol tcp --port 443 --cidr 0.0.0.0/0
+aws ec2 authorize-security-group-ingress --group-name Mysg --ip-permissions IpProtocol=icmp,FromPort=-1,ToPort=-1,IpRanges='[{CidrIp=0.0.0.0/0}]'
+aws ec2 authorize-security-group-ingress --group-name Mysg --ip-permissions IpProtocol=icmpv6,Ipv6Ranges='[{CidrIpv6=::/0}]'
+aws ec2 describe-security-group --group-name Mysg
+
+---------------------
+aws ec2 delete-security-group --group-name Mysg
+------------------
+To create an instance
+
+aws ec2 run-instances \
+    --image-id ami-0fc20dd1da406780b \
+    --count 1 \
+    --instance-type t2.micro \
+    --key-name MyKeyPair \
+    --security-groups MySg \
+
+To add Tag after creating the instance
+
+aws ec2 create-tags \
+    --resources xxxxxxx --tags Key=Name,Value=CliInst
+
+To modify the tag, same command can be used with different tag name
+
+aws ec2 create-tags \
+
+    --resources i-0e3df7435d0c8f339 --tags Key=Name,Value=InstWithUserData1
+
+----------------------
+
+To create an instance with Tag
+
+aws ec2 run-instances \
+    --image-id ami-0fc20dd1da406780b \
+    --count 1 \
+    --instance-type t2.micro \
+    --key-name MyKeyPair \
+    --security-groups MySg \
+    --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=CLIInst}]'
+----------------------------------------------
+You need instance id to stop or terminate the instance
+
+aws ec2 stop-instances --instance-ids i-01569eb34f58c001f
+aws ec2 terminate-instances --instance-ids i-01569eb34f58c001f
+-----------------------------------
+To start an instance
+
+aws ec2 start-instances --instance-ids i-0e3df7435d0c8f339
+aws ec2 stop-instances --instance-ids i-0e3df7435d0c8f339
